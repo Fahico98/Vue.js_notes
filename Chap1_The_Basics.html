@@ -1,0 +1,391 @@
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Document</title>
+   </head>
+   <body>
+
+      <!------ Templates, Data, and Directives ------>
+
+      <!--
+      <div id="app">
+         <h1><p v-if="hours < 12">Good morninig...!</p></h1>
+         <h1><p v-if="hours >= 12 && hours < 18">Good afternoon...!</p></h1>
+         <h1><p v-if="hours >= 18">Good evening...!</p></h1>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         var hours = new Date().getHours();
+         new Vue({
+            el: "#app",
+            data: {
+               hours: new Date().getHours()
+            }
+         });
+      </script>
+      -->
+
+
+
+      <!------ v-if Versus v-show ------>
+
+      <!--
+      <div id="app">
+         <div v-if="user">
+            <h1>User name: {{ user.name }}</h1>
+         </div>
+         <div v-show="user">
+            <h1>User name: {{ user.name }}</h1>
+         </div>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {user: undefined}
+         });
+      </script>
+      -->
+
+
+
+      <!------ Looping in Templates ------>
+
+      <!--
+      <div id="app">
+         <ul>
+            <li v-for="dog in dogs">{{ dog }}</li>
+         </ul>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               dogs: ['Rex', 'Rover', 'Henrietta', 'Alan']
+            }
+         });
+      </script>
+      -->
+
+      <!--
+      Finally, if you just want a simple counter, you can pass a number in as the argument.
+      The following outputs the numbers 1 to 10:
+      -->
+
+      <!--
+      <div id="app">
+         <ul>
+            <li v-for="n in 10">{{ n }}</li>
+         </ul>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app'
+         });
+      </script>
+      -->
+
+
+
+      <!------ Binding Arguments ------>
+
+      <!--
+      Some directives, such as v-bind, take arguments. The v-bind directive is used to bind
+      a value to an HTML attribute. For instance, the following example binds the value
+      submit to the button type:
+      -->
+
+      <!--
+      <div id="app">
+         <button v-bind:type="buttonType">Test button</button>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               buttonType: 'submit'
+            }
+         });
+      </script>
+      -->
+
+      <!--
+      When using v-bind with a lot of attributes, it can be pretty repetitive to write it out
+      multiple times. There’s a shorter way to write it: you can omit the v-bind part of the
+      directive and use a colon. For example, this is how you would rewrite the preceding
+      code example using the shorter syntax:
+      -->
+
+      <!--
+      <div id="app">
+         <button :disabled="buttonDisabled">Test button</button>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               buttonDisabled: true
+            }
+         });
+      </script>
+      -->
+
+
+
+      <!------ Reactivity ------>
+
+      <!--
+      In addition to creating the HTML in the first place, Vue watches the 'data' object for
+      changes and updates the DOM when the data changes. To demonstrate this, let’s
+      make a simple timer app that tells you how long the page has been open. We’ll need
+      only one variable, which we’ll call seconds, and we’ll use 'setInterval' to increment
+      that variable once a second:
+      -->
+
+      <!--
+      <div id="app">
+         <p>{{ seconds }} seconds have elapsed since you opened the page.</p>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               seconds: 0
+            },
+            created(){
+               setInterval(() => {
+                  this.seconds++;
+               }, 1000);
+            }
+         });
+      </script>
+      -->
+
+
+
+      <!------ Two-Way Data Binding ------>
+
+      <!--
+      <div id="app">
+         <input type="text" v-model="inputText">
+         <p>inputText: {{ inputText }}</p>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               inputText: 'initial value'
+            }
+         });
+      </script>
+      -->
+
+      <!--
+      <div id="app">
+         <input type="text" value="initial value" v-bind:value="inputText">
+         <p>inputText: {{ inputText }}</p>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               inputText: 'initial value from data object...!'
+            }
+         });
+      </script>
+      -->
+
+
+
+      <!------ Computed Properties ------>
+
+      <!--
+      'Computed propertie' sit halfway between properties of the data object and methods:
+      you can access them as if they were properties of the data object, but they are specified
+      as functions.
+   
+      But what’s the difference between using computed properties and methods, aside
+      from the obvious syntax difference? Well, there are a couple.
+
+      The first is that computed properties are cached: if you call a method multiple times
+      in a template, the code inside the method will be run every single time the method is
+      called, whereas if a computed property is called multiple times, the code inside will be
+      run only once, and every time after that, the cached value will be used. The code will
+      be run again only when a dependency of the method changes: for example, in the
+      previous code sample, if we push a new item to basketItems, the code inside basket
+      Total is run again to get the new value.
+      -->
+
+      <!--
+      <div id="app">
+         <p>Sum of numbers: {{ numberTotal }}</p>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               numbers: [5, 8, 3]
+            },
+            computed: {
+               numberTotal() {
+                  return numbers.reduce((sum, val) => sum + val);
+               }
+            }
+         });
+      </script>
+      -->
+
+
+
+      <!------ Watchers ------>
+      
+      <!--
+      Watchers allow us to watch a property of the data object or a computed property for
+      changes.
+      -->
+
+      <!--
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               count: 0
+            },
+               watchers: {
+               count() {
+                  // this.count has been changed!
+               }
+            }
+         });
+      </script>
+      -->
+
+
+
+      <!------ Filters ------>
+
+      <!--
+      Filters, also often seen in other templating languages, are a convenient way of
+      manipulating data in your templates. I find them great for making simple display
+      changes to strings and numbers: for example, changing a string to the correct case
+      or displaying a number in a human-readable format.
+      
+      Take the following code sample:
+      -->
+
+      <!--
+      <div id="app">
+         <p>Product one cost: ${{ (productOneCost / 100).toFixed(2) }}</p>
+         <p>Product two cost: ${{ (productTwoCost / 100).toFixed(2) }}</p>
+         <p>Product three cost: ${{ (productThreeCost / 100).toFixed(2) }}</p>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               productOneCost: 998,
+               productTwoCost: 2399,
+               productThreeCost: 5300
+            }
+         });
+      </script>
+      -->
+
+      <!--
+      It works, but there’s a lot of duplication. For every item, we’re doing the math to convert
+      it from cents to dollars, displaying it to two decimal places, and adding the dollar
+      sign. Although we can definitely split that logic into a method, this time we’ll split
+      that logic into a filter, as it’s more readable and can be added globally:
+      -->
+
+      <!--
+      <div id="app">
+         <p>Product one cost: {{ productOneCost | formatCost }}</p>
+         <p>Product two cost: {{ productTwoCost | formatCost }}</p>
+         <p>Product three cost: {{ productThreeCost | formatCost }}</p>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               productOneCost: 998,
+               productTwoCost: 2399,
+               productThreeCost: 5300
+            },
+            filters: {
+               formatCost(value){
+                  return '$' + (value/100).toFixed(2);
+               }
+            }
+         });
+      </script>
+      -->
+
+      <!--
+      You can use multiple filters in the same expression by chaining them together. For
+      example, if we have a 'round' filter that rounds a number to the nearest integer, you
+      could use both filters together by writing {{ productOneCost | round | format
+      Cost }}.
+      -->
+
+
+
+      <!------ Inputs and Events ------>
+
+      <!--
+      To bind an event listener to an element, you can use the v-on directive. It takes the
+      name of the event as the argument, and the event listener as the passed value. For
+      example, to increase the value of counter by one when a button is clicked, you can
+      write the following:
+      -->
+
+      <!--
+      <div id="app">
+         <button v-on:click="increase">Click to increase counter</button>
+         <p>You've clicked the button <strong>{{ counter }}</strong> times...!</p>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               counter: 0
+            },
+            methods: {
+               increase(e) {
+                  this.counter++;
+               }
+            }
+         });
+      </script>
+      -->
+
+
+
+      <!------ The v-on Shortcut ------>
+
+      <!--
+      Similarly to the v-bind directive, v-on also has a shorter way of writing it. Instead of
+      writing v-on:click, you can write just @click.
+      -->
+
+
+
+      
+
+   </body>
+</html>

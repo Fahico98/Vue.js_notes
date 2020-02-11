@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+   </head>
+   <body>
+      
+      <!------ Component Basics ------>
+
+      <!--
+      You can then pass this component into your app by using the 'components' objects:
+      -->
+
+      <!--
+      <div id="app">
+         <custom-button></custom-button>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         const CustomButton = {
+            template: '<button>Custom button</button>'
+         };
+         new Vue({
+            el: '#app',
+            components: {
+               CustomButton
+            }
+         });
+      </script>
+      -->
+
+
+
+      <!------ Data, Methods, and Computed Properties ------>
+
+      <!--
+      Each component can have its own data, methods, computed properties, and everything
+      you’ve seen previously—just like the Vue instance itself. The object to define a
+      component is similar to the object we used to define the Vue instance, and you can
+      use it the same in a lot of ways. For example, let’s define and globally register a
+      component with some data and a computed property:
+      -->
+
+      <!--
+      <script>
+         Vue.component('positive-numbers', {
+            template: "<p>{{ positiveNumbers.length }} positive numbers</p>",
+            data(){
+               return {
+                  numbers: [-5, 0, 2, -1, 1, 0.5]
+               };
+            },
+            computed: {
+               positiveNumbers() {
+                  return this.numbers.filter((number) => number >= 0);
+               }
+            }
+         });
+      </script>
+      -->
+
+      <!------ Passing in Data ------>
+
+      <!--
+      Components are useful, but they really show their power when you start passing data
+      into them. You can pass data into a component by using props. Take the following
+      example:
+      -->
+
+      <!--
+      <div id="app">
+         <color-preview color="red"></color-preview>
+         <color-preview color="blue"></color-preview>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         Vue.component('color-preview', {
+            template: '<div class="color-preview" :style="style"><h2>Color</h2></div>',
+            props: ['color'],
+            computed: {
+               style(){
+                  return {backgroundColor: this.color};
+               }
+            }
+         });
+         new Vue({
+            el: '#app'
+         });
+      </script>
+      -->
+
+      
+
+   </body>
+</html>

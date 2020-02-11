@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+   </head>
+   <body>
+      <div id="app">
+         <h1>Keyboard events...!</h1>
+         <label>Name:</label>
+         <input type="text" v-on:keyup.enter="logName">
+         <label>Age:</label>
+         <input type="text" v-on:keyup.ctrl.enter="logAge">
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+               logName: function(){
+                  console.log("You entered your name...!");
+               },
+               logAge: function(){
+                  console.log("You entered your age...!");
+               }
+            }
+         });
+      </script>
+   </body>
+</html>

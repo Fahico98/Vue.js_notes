@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+   </head>
+   <body>
+      <div id="app">
+         <h1>Data binding...!</h1>
+         <h3>Name: {{ name }}</h3>
+         <input type="text" v-bind:value="job">
+         <div>
+            <a v-bind:href="website">Go to website</a>
+            <p v-html="websiteTag"></p>
+         </div>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: "#app",
+            data: {
+               name: "Fahico",
+               job: "Developer",
+               website: "http://www.fahico.com",
+               websiteTag: "<a href='http://www.fahico.com'>Go to website</a>"
+            },
+            methods: {
+               greeting: function(time){
+                  return "Good " + time + " " + this.name
+               }
+            }
+         });
+      </script>
+   </body>
+</html>
