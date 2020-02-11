@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+   </head>
+   <body>
+      <div id="app">
+         <h1>Computed Properties</h1>
+         <button v-on:click="A++">Add one to A</button>
+         <button v-on:click="B++">Add one to B</button>
+         <p>A = {{ A }}</p>
+         <p>B = {{ B }}</p>
+         <p>rand = {{ rand }}</p>
+         <p>rand + A = {{ randPlusA }}</p>
+         <p>rand + B = {{ randPlusB }}</p>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: "#app",
+            data: {
+               rand: 25,
+               A: 0,
+               B: 0
+            },
+            /*
+            methods: {
+               randPlusA: function(){
+                  console.log("Executing randPlusA function...!");
+                  return this.rand + this.A;
+               },
+               randPlusB: function(){
+                  console.log("Executing randPlusB function...!");
+                  return this.rand + this.B;
+               }
+            }
+            */
+            computed: {
+               randPlusA: function(){
+                  console.log("Executing randPlusA function...!");
+                  return this.rand + this.A;
+               },
+               randPlusB: function(){
+                  console.log("Executing randPlusB function...!");
+                  return this.rand + this.B;
+               }
+            }
+         });
+      </script>
+   </body>
+</html>
