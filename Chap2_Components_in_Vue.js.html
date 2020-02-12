@@ -61,6 +61,8 @@
       </script>
       -->
 
+
+
       <!------ Passing in Data ------>
 
       <!--
@@ -77,10 +79,13 @@
       <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
       <script>
          Vue.component('color-preview', {
-            template: '<div class="color-preview" :style="style"><h2>Color</h2></div>',
+            template:
+               `<div v-bind:style="style">
+                  <h2>{{color}}</h2>
+               </div>`,
             props: ['color'],
             computed: {
-               style(){
+               style: function(){
                   return {backgroundColor: this.color};
                }
             }
@@ -91,7 +96,64 @@
       </script>
       -->
 
-      
+
+
+      <!-- Casing of Props -->
+
+      <!--
+      Props specified as kebab case (my-prop) in your HTML are automatically converted to camel
+      case in your component:
+      -->
+
+      <!--
+      <div id="app">
+         <price-display percentage-discount="20%"></price-display>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         
+         Vue.component('price-display', {
+            props: {
+               percentageDiscount: Number
+            }
+         });
+         
+         new Vue({
+            el: '#app'
+         });
+
+      </script>
+      -->
+
+
+
+      <!-- Custom Events -->
+
+      <!--
+      v-on works with custom events that you can emit from your components. To fire a custom
+      event, use the this.$emit() method with the name of the event and any arguments you want
+      to pass. Then you can use v-on on the component to listen to the event. The following is
+      a simple component that emits an event called 'count' every time it is clicked:
+      -->
+
+      <div id="app">
+         <button v-on:click="handleClick">Clicked {{clicks}} times</button>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               clicks: 0
+            },
+            methods: {
+               handleClick: function(){
+                  this.clicks++;
+                  this.$emit('count', this.clicks);
+               }
+            }
+         });
+      </script>
 
    </body>
 </html>
