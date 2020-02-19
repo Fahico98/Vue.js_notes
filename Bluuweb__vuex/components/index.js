@@ -4,8 +4,11 @@ const store = new Vuex.Store({
       number: 10
    },
    mutations: {
-      addToNumber: function(state){
-         state.number++;
+      addToNumber: function(state, c){
+         state.number += c;
+      },
+      restarToNumber: function(state, c){
+         state.number -= c;
       }
    }
 });

@@ -6,8 +6,14 @@ Vue.component("my-title", {
          <child></child>
       </div>`,
    computed: {
+      /*
       number: function(){
          return store.state.number;
       }
+      */
+      ...Vuex.mapState(["number"]) // (*)
+   },
+   methods: {
+      ...Vuex.mapMutations(["addToNumber", "restarToNumber"]) // (*)
    }
 });
