@@ -5,7 +5,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>Document</title>
+      <title>Chapter 1 - The Basics</title>
    </head>
    <body>
 
@@ -257,15 +257,25 @@
       -->
 
       <!--
+      <div id="app">
+         <input type="text" v-model="inputValue">
+         <p>Five seconds ago, the input said "{{ oldInputValue }}".</p>
+      </div>
+      
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
       <script>
          new Vue({
             el: '#app',
             data: {
-               count: 0
+               inputValue: '',
+               oldInputValue: ''
             },
-               watchers: {
-               count() {
-                  // this.count has been changed!
+            watch: {
+               inputValue(){
+                  const newValue = this.inputValue;
+                  setTimeout(() => {
+                     this.oldInputValue = newValue;
+                  }, 5000);
                }
             }
          });
@@ -313,9 +323,15 @@
 
       <!--
       <div id="app">
+
          <p>Product one cost: {{ productOneCost | formatCost }}</p>
          <p>Product two cost: {{ productTwoCost | formatCost }}</p>
          <p>Product three cost: {{ productThreeCost | formatCost }}</p>
+
+         <p>Product one cost: {{ formatCost(productOneCost) }}</p>
+         <p>Product two cost: {{ formatCost(productTwoCost) }}</p>
+         <p>Product three cost: {{ formatCost(productThreeCost) }}</p>
+
       </div>
       <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
       <script>
@@ -326,7 +342,14 @@
                productTwoCost: 2399,
                productThreeCost: 5300
             },
+            /*
             filters: {
+               formatCost(value){
+                  return '$' + (value/100).toFixed(2);
+               }
+            }
+            */
+            methods: {
                formatCost(value){
                   return '$' + (value/100).toFixed(2);
                }
@@ -338,8 +361,7 @@
       <!--
       You can use multiple filters in the same expression by chaining them together. For
       example, if we have a 'round' filter that rounds a number to the nearest integer, you
-      could use both filters together by writing {{ productOneCost | round | format
-      Cost }}.
+      could use both filters together by writing {{ productOneCost | round | formatCost }}.
       -->
 
 
@@ -376,16 +398,190 @@
 
 
 
-      <!------ The v-on Shortcut ------>
+      <!------ Life-Cycle Hooks ------>
 
       <!--
-      Similarly to the v-bind directive, v-on also has a shorter way of writing it. Instead of
-      writing v-on:click, you can write just @click.
+      You’ve seen a couple of times now that if you specify a function as the 'created'
+      property on a component or your Vue instance, it is called when the component is, well,
+      created. This is an example of what’s known as a life-cycle hook, a series of functions
+      that are called at various points throughout the life cycle of a component—all the way
+      from when it created and added the DOM, to when it is destroyed.
+
+      Here’s the basic life cycle of an object: first, the Vue instance is initiated when new
+      Vue() is called. The first hook, beforeCreate, is called, and reactivity is initiated.
+      Then the created hook is called—you can see how this works with the hook names. The
+      “before” hook is called before the thing that triggers the hook happens, and then the
+      actual hook is called afterward. Next, the template is compiled—either from the template
+      or render options, or from the outerHTML of the element that Vue was initialized to. The
+      DOM element is now ready to be created, so the beforeMount hook is fired, the element is
+      created, and then the mounted hook is fired.
+
+      One thing to be careful of is that as of Vue 2.0, the mounted hook doesn’t guarantee
+      that the element has been added to the DOM. To make sure that it has been added, you can
+      call Vue.nextTick() (also available as this.$nextTick()) with a callback method containing
+      the code you want to run after the element is definitely added to the DOM. For example:
+      
+      <div id="app">
+         <p>Hello world</p>
+      </div>
+      <script>
+         new Vue({
+            el: '#app',
+            mounted(){
+            
+               // Element might not have been added to the DOM yet
+
+               this.$nextTick(() => {
+               
+                  // Element has definitely been added to the DOM now
+
+               });
+            }
+         });
+      </script>
+
+      • beforeCreate is fired before the instance is initialized.
+      
+      • created is fired after the instance has been initialized but before it is added to the DOM.
+      
+      • beforeMount is fired after the element is ready to be added to the DOM but before it has
+      been.
+      
+      • mounted is fired after the element has been created (but not necessarily added to the DOM:
+      use nextTick for that).
+
+      • beforeUpdate is fired when there are changes to be made to the DOM output.
+      
+      • updated is fired after changes have been written to the DOM.
+      
+      • beforeDestroy is fired when the component is about to be destroyed and removed from the DOM.
+      
+      • destroyed is fired after the component has been destroyed.
+      -->
+      
+
+
+      <!------ Custom Directives ------>
+
+      <!-- Example 1 -->
+
+      <!--
+      <div id="app">
+         <h1 v-rainbow>{{ title }}</h1>
+         <h1 v-rainbow>{{ title }}</h1>
+         <h1 v-rainbow>{{ title }}</h1>
+         <h1 v-rainbow>{{ title }}</h1>
+         <h1 v-rainbow>{{ title }}</h1>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               title: "Custom Directives Example 1...!"
+            },
+            directives: {
+               rainbow: {
+                  bind(el, binding, vnode){
+                     el.style.color = "#" + Math.random().toString().slice(2, 8);
+                  }
+               }
+            }
+         });
+      </script>
+      -->
+
+      <!-- Example 2 -->
+
+      <!--
+      <div id="app">
+         <div v-theme="'wide'">
+            <h1>{{ title }}</h1>
+         </div>
+         <div v-theme="'narrow'">
+            <h1>{{ title }}</h1>
+         </div>
+         <div v-theme:column="'wide'">
+            <h1>{{ title }}</h1>
+         </div>
+      </div>
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+      <script>
+         new Vue({
+            el: '#app',
+            data: {
+               title: "Custom Directives Example 2...!"
+            },
+            directives: {
+               theme: {
+                  bind(el, binding, vnode){
+                     if(binding.value == "wide"){
+                        el.style.maxWidth = "1200px";
+                        el.style.background = "lightblue";
+                     }else if(binding.value == "narrow"){
+                        el.style.maxWidth = "920px";
+                        el.style.background = "lightgreen";
+                     }
+                     if(binding.arg == "column"){
+                        el.style.maxWidth = "560px";
+                        el.style.background = "orange";
+                     }
+                  }
+               }
+            }
+         });
+      </script>
       -->
 
 
 
-      
+      <!------ CSS Transitions ------>
+
+      <!--
+      Vue provides a transition wrapper component, allowing you to add entering/leaving transitions
+      for any element or component in the following contexts:
+
+      -> Conditional rendering (using v-if)
+      -> Conditional display (using v-show)
+      -> Dynamic components
+      -> Component root nodes
+
+      This is what an example looks like in action:
+      -->
+
+      <!--
+      <div id="demo">
+         <button v-on:click="show = !show">
+           Toggle
+         </button>
+         <transition name="fade">
+           <p v-if="show">hello</p>
+         </transition>
+      </div>
+
+      <script src="https://unpkg.com/vue@2.6.11/dist/vue.js"></script>
+
+      <script>
+         new Vue({
+            el: '#demo',
+            data: {
+               show: true
+            }
+         });
+      </script>
+
+      <style>
+         /*
+         enter-active: 
+         */
+         .fade-enter-active, .fade-leave-active {
+            transition: opacity 0.2s;
+         }
+         .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+         }
+      </style>
+      -->
 
    </body>
 </html>
